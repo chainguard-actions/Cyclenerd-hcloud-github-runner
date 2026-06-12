@@ -1,0 +1,27 @@
+name: Test delete mode inputs
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          mode: delete
+          github_token: fake-github-token
+          hcloud_token: fake-hcloud-token
+          server_id: '12345678'
+          name: test-runner-delete
+      - name: Assert action ran (expected to fail due to fake tokens)
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" = "skipped" ]; then
+            echo "FAIL: action was skipped, expected it to run"
+            exit 1
+          fi
+          echo "PASS: action ran with outcome=$OUTCOME (failure expected with fake tokens)"

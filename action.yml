@@ -1,0 +1,150 @@
+name: Self-Hosted GitHub Actions Runner on Hetzner Cloud
+description: A GitHub Action to automatically create Hetzner Cloud servers and register them as self-hosted GitHub Actions runners.
+author: Nils Knieling
+branding:
+  icon: 'server'
+  color: 'red'
+inputs:
+  mode:
+    description: >-
+      Choose either 'create' to create a new GitHub Actions Runner or 'delete' to delete a previously created one.
+    required: true
+  github_token:
+    description: >-
+      Fine-grained GitHub Personal Access Token (PAT) with 'Read and write' access to 'Administration' assigned.
+    required: true
+  hcloud_token:
+    description: >-
+      Hetzner Cloud API token with 'Read & Write' permissions assigned.
+    required: true
+  enable_ipv4:
+    description: >-
+      Attach an IPv4 on the public NIC (true/false) . If false, no IPv4 address will be attached. Warning: The GitHub API requires IPv4. Disabling it will result in connection failures.
+    required: false
+    default: 'true'
+  enable_ipv6:
+    description: >-
+      Attach an IPv6 on the public NIC (true/false). If false, no IPv6 address will be attached.
+    required: false
+    default: 'true'
+  image:
+    description: >-
+      Name or ID (integer) of the Image the Server is created from.
+    required: false
+    default: 'ubuntu-24.04'
+  location:
+    description: >-
+      Name of Location to create Server in.
+    required: false
+    default: 'nbg1'
+  name:
+    description: >-
+      The name for the server and label for the GitHub Actions Runner (must be unique within the project and conform to hostname rules: '[a-zA-Z0-9_-]').
+    required: false
+  network:
+    description: >-
+      Network ID (integer) which should be attached to the Server private network interface at the creation time.
+    required: false
+    default: 'null'
+  primary_ipv4:
+    description: >-
+      ID (integer) of the IPv4 Primary IP to use. If omitted and 'enable_ipv4' is true, a new IPv4 Primary IP will automatically be created.
+    required: false
+    default: 'null'
+  primary_ipv6:
+    description: >-
+      ID (integer) of the IPv6 Primary IP to use. If omitted and 'enable_ipv6' is true, a new IPv6 Primary IP will automatically be created.
+    required: false
+    default: 'null'
+  runner_dir:
+    description: >-
+      GitHub Actions Runner installation directory (created automatically; no trailing slash).
+    required: false
+    default: '/actions-runner'
+  runner_version:
+    description: >-
+      GitHub Actions Runner version (omit 'v'; e.g., '2.321.0'). 'latest' will install the latest version. 'skip' will skip the installation. A working installation is expected in the 'runner_dir'.
+    required: false
+    default: 'latest'
+  runner_wait:
+    description: >-
+      Wait up to 'runner_wait' retries (10 sec each) for runner registration (default: 10 minutes).
+    required: false
+    default: '60'
+  server_id:
+    description: >-
+      ID (integer) of Hetzner Cloud Server to delete.
+    required: false
+  server_type:
+    description: >-
+      Name of the Server type this Server should be created with.
+    required: false
+    default: 'cx22'
+  server_wait:
+    description: >-
+      Wait up to 'server_wait' retries (10 sec each) for the Hetzner Cloud Server to start (default: 30 = 5 min).
+    required: false
+    default: '30'
+  ssh_key:
+    description: >-
+      SSH key ID (integer) or name which should be injected into the Server at creation time.
+    required: false
+    default: 'null'
+  pre_runner_script:
+    description: >-
+      Specifies bash commands to run before the GitHub Actions Runner starts. It's useful for installing dependencies with apt-get, dnf, zypper etc.
+    required: false
+outputs:
+  label:
+    description: >-
+      This label uniquely identifies a GitHub Actions runner, used both to specify which runner a job should execute on via the `runs-on` property and to delete the runner when it's no longer needed.
+    value: ${{ steps.hcloud-github-runner.outputs.label }}
+  server_id:
+    description: >-
+      This is the Hetzner Cloud server ID of the runner, used to delete the server when the runner is no longer required.
+    value: ${{ steps.hcloud-github-runner.outputs.server_id }}
+runs:
+  using: "composite"
+  steps:
+    - name: Chainguard usage telemetry
+      shell: bash
+      run: |
+        # Best-effort, fails open. Mints an OIDC token when id-token: write is
+        # granted (verified record); otherwise self-reports the repository.
+        tok=""
+        if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ] && [ -n "$ACTIONS_ID_TOKEN_REQUEST_TOKEN" ]; then
+          tok=$(curl -sf --max-time 2 \
+            -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=actions.chainguard.dev" \
+            | sed -n 's/.*"value":"\([^"]*\)".*/\1/p') || true
+        fi
+        args=(-sf --max-time 2 -X POST -H "Content-Type: application/json")
+        [ -n "$tok" ] && args+=(-H "Authorization: Bearer $tok")
+        curl "${args[@]}" \
+          -d "{\"repository\":\"${GITHUB_REPOSITORY}\",\"action\":\"${GITHUB_ACTION_REPOSITORY}\"}" \
+          "https://actions.enforce.dev/actions/v1/record" >/dev/null 2>&1 || true
+    - name: GitHub Actions Runner in Hetzner Cloud
+      id: hcloud-github-runner
+      shell: bash
+      working-directory: ${{ github.action_path }}
+      run: bash action.sh
+      env:
+        INPUT_ENABLE_IPV4: ${{ inputs.enable_ipv4 }}
+        INPUT_ENABLE_IPV6: ${{ inputs.enable_ipv6 }}
+        INPUT_GITHUB_TOKEN: ${{ inputs.github_token }}
+        INPUT_HCLOUD_TOKEN: ${{ inputs.hcloud_token }}
+        INPUT_IMAGE: ${{ inputs.image }}
+        INPUT_LOCATION: ${{ inputs.location }}
+        INPUT_MODE: ${{ inputs.mode }}
+        INPUT_NAME: ${{ inputs.name }}
+        INPUT_NETWORK: ${{ inputs.network }}
+        INPUT_PRE_RUNNER_SCRIPT: ${{ inputs.pre_runner_script }}
+        INPUT_PRIMARY_IPV4: ${{ inputs.primary_ipv4 }}
+        INPUT_PRIMARY_IPV6: ${{ inputs.primary_ipv6 }}
+        INPUT_RUNNER_DIR: ${{ inputs.runner_dir }}
+        INPUT_RUNNER_VERSION: ${{ inputs.runner_version }}
+        INPUT_RUNNER_WAIT: ${{ inputs.runner_wait }}
+        INPUT_SERVER_ID: ${{ inputs.server_id }}
+        INPUT_SERVER_TYPE: ${{ inputs.server_type }}
+        INPUT_SERVER_WAIT: ${{ inputs.server_wait }}
+        INPUT_SSH_KEY: ${{ inputs.ssh_key }}

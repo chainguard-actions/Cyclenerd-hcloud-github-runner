@@ -1,0 +1,21 @@
+{
+  "location": $location,
+  "labels": {
+    "type": "github-runner",
+    "os-image": $image,
+    "gh-ver": $runner_version,
+    "gh-owner-id": $github_owner_id,
+    "gh-repo-id": $github_repo_id
+  },
+  "image": $image,
+  "server_type": $server_type,
+  "name": $name,
+  "networks": [],
+  "public_net": {
+    "enable_ipv4": $enable_ipv4,
+    "enable_ipv6": $enable_ipv6,
+  },
+  "start_after_create": true,
+  "ssh_keys": [],
+  "user_data": $cloud_init_yml,
+}

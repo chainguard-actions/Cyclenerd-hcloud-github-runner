@@ -13,6 +13,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 | v1.2.0 | [`v1.2.0`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/tree/v1.2.0) | [`5545b71`](https://github.com/Cyclenerd/hcloud-github-runner/commit/5545b710131576fb4f4f84e9a4565dd8f7503eb9) |
 | v1.3.0 | [`v1.3.0`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/tree/v1.3.0) | [`1d46431`](https://github.com/Cyclenerd/hcloud-github-runner/commit/1d464319145d45966cd0344f3e2038cf2152dc1d) |
 | v1.4.0 | [`v1.4.0`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/tree/v1.4.0) | [`54da470`](https://github.com/Cyclenerd/hcloud-github-runner/commit/54da4707b01dfca5dd38cd15cde4afcd950f2b4a) |
+| v1.4.1 | [`v1.4.1`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/tree/v1.4.1) | [`94a0a4a`](https://github.com/Cyclenerd/hcloud-github-runner/commit/94a0a4aa750d832b48cc0f66d24ed56c3fe69448) |
 
 ## Privacy
 

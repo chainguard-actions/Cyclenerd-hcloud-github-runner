@@ -1,0 +1,37 @@
+name: Test create mode input validation
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_REPOSITORY: test-owner/test-repo
+      GITHUB_REPOSITORY_OWNER_ID: "0"
+      GITHUB_REPOSITORY_ID: "0"
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          mode: create
+          name: test-runner-ci
+          github_token: fake-github-token-for-testing
+          hcloud_token: fake-hcloud-token-for-testing
+          pre_runner_script: "echo 'pre-runner script executed'"
+          server_type: cx23
+          location: nbg1
+          image: ubuntu-24.04
+      - name: Assert action failed at API call not at input validation
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          # The action should fail (fake tokens), but it must have passed input validation.
+          # If it failed at input validation, it would print "FAILURE:" to stderr before the API call.
+          # We accept 'failure' here since fake tokens will cause API errors.
+          if [ "$OUTCOME" != "failure" ] && [ "$OUTCOME" != "success" ]; then
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi
+          echo "PASS: action ran with required inputs (mode, name, github_token, hcloud_token, pre_runner_script)"

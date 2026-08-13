@@ -430,7 +430,8 @@ fi
 #echo "::set-output name=server_id::$MY_HETZNER_SERVER_ID"
 MY_NAME_SAFE=$(printf '%s' "$MY_NAME" | tr -d '\n\r')
 echo "label=$MY_NAME_SAFE" >> "$GITHUB_OUTPUT"
-echo "server_id=$MY_HETZNER_SERVER_ID" >> "$GITHUB_OUTPUT"
+MY_HETZNER_SERVER_ID_SAFE=$(printf '%s' "$MY_HETZNER_SERVER_ID" | tr -d '\n\r')
+echo "server_id=$MY_HETZNER_SERVER_ID_SAFE" >> "$GITHUB_OUTPUT"
 
 # Wait for server
 MAX_RETRIES=$MY_SERVER_WAIT

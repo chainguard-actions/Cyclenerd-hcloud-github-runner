@@ -457,8 +457,8 @@ fi
 # https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
 #echo "::set-output name=label::$MY_NAME"
 #echo "::set-output name=server_id::$MY_HETZNER_SERVER_ID"
-safe_name=$(printf '%s' "$MY_NAME" | tr -d '\n\r')
-echo "label=$safe_name" >> "$GITHUB_OUTPUT"
+safe_label=$(printf '%s' "$MY_NAME" | tr -d '\n\r')
+echo "label=$safe_label" >> "$GITHUB_OUTPUT"
 echo "server_id=$MY_HETZNER_SERVER_ID" >> "$GITHUB_OUTPUT"
 
 # Wait for server

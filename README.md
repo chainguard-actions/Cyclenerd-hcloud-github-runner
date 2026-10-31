@@ -6,14 +6,14 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 ## Versions
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| v1.0.0 | [`v1.0.0`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/tree/v1.0.0) | [`dca893b`](https://github.com/Cyclenerd/hcloud-github-runner/commit/dca893bfda441c5ef3dd78e8d4a3deb63f819ea9) |
-| v1.1.0 | [`v1.1.0`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/tree/v1.1.0) | [`62495bf`](https://github.com/Cyclenerd/hcloud-github-runner/commit/62495bf1100c85e3a9ac3e3c31bc9422c6bc269f) |
-| v1.2.0 | [`v1.2.0`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/tree/v1.2.0) | [`5545b71`](https://github.com/Cyclenerd/hcloud-github-runner/commit/5545b710131576fb4f4f84e9a4565dd8f7503eb9) |
-| v1.3.0 | [`v1.3.0`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/tree/v1.3.0) | [`1d46431`](https://github.com/Cyclenerd/hcloud-github-runner/commit/1d464319145d45966cd0344f3e2038cf2152dc1d) |
-| v1.4.0 | [`v1.4.0`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/tree/v1.4.0) | [`54da470`](https://github.com/Cyclenerd/hcloud-github-runner/commit/54da4707b01dfca5dd38cd15cde4afcd950f2b4a) |
-| v1.4.1 | [`v1.4.1`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/tree/v1.4.1) | [`94a0a4a`](https://github.com/Cyclenerd/hcloud-github-runner/commit/94a0a4aa750d832b48cc0f66d24ed56c3fe69448) |
+| Version | Tag | Upstream commit | Hardening report |
+|---------|-----|-----------------|------------------|
+| v1.0.0 | [`v1.0.0`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/tree/v1.0.0) | [`dca893b`](https://github.com/Cyclenerd/hcloud-github-runner/commit/dca893bfda441c5ef3dd78e8d4a3deb63f819ea9) | [`HARDENING.md`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/blob/v1.0.0/HARDENING.md) |
+| v1.1.0 | [`v1.1.0`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/tree/v1.1.0) | [`62495bf`](https://github.com/Cyclenerd/hcloud-github-runner/commit/62495bf1100c85e3a9ac3e3c31bc9422c6bc269f) | [`HARDENING.md`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/blob/v1.1.0/HARDENING.md) |
+| v1.2.0 | [`v1.2.0`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/tree/v1.2.0) | [`5545b71`](https://github.com/Cyclenerd/hcloud-github-runner/commit/5545b710131576fb4f4f84e9a4565dd8f7503eb9) | [`HARDENING.md`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/blob/v1.2.0/HARDENING.md) |
+| v1.3.0 | [`v1.3.0`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/tree/v1.3.0) | [`1d46431`](https://github.com/Cyclenerd/hcloud-github-runner/commit/1d464319145d45966cd0344f3e2038cf2152dc1d) | [`HARDENING.md`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/blob/v1.3.0/HARDENING.md) |
+| v1.4.0 | [`v1.4.0`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/tree/v1.4.0) | [`54da470`](https://github.com/Cyclenerd/hcloud-github-runner/commit/54da4707b01dfca5dd38cd15cde4afcd950f2b4a) | [`HARDENING.md`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/blob/v1.4.0/HARDENING.md) |
+| v1.4.1 | [`v1.4.1`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/tree/v1.4.1) | [`94a0a4a`](https://github.com/Cyclenerd/hcloud-github-runner/commit/94a0a4aa750d832b48cc0f66d24ed56c3fe69448) | [`HARDENING.md`](https://github.com/chainguard-actions/Cyclenerd-hcloud-github-runner/blob/v1.4.1/HARDENING.md) |
 
 ## Privacy
 

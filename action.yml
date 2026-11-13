@@ -1,9 +1,11 @@
 name: Self-Hosted GitHub Actions Runner on Hetzner Cloud
 description: A GitHub Action to automatically create Hetzner Cloud servers and register them as self-hosted GitHub Actions runners.
 author: Nils Knieling
+
 branding:
   icon: 'server'
   color: 'red'
+
 inputs:
   create_wait:
     description: >-
@@ -17,7 +19,8 @@ inputs:
     default: '360'
   enable_ipv4:
     description: >-
-      Attach an IPv4 on the public NIC (true/false) . If false, no IPv4 address will be attached. Warning: The GitHub API requires IPv4. Disabling it will result in connection failures.
+      Attach an IPv4 on the public NIC (true/false) . If false, no IPv4 address will be attached.
+      Warning: The GitHub API requires IPv4. Disabling it will result in connection failures.
     required: false
     default: 'true'
   enable_ipv6:
@@ -58,16 +61,19 @@ inputs:
     default: 'null'
   pre_runner_script:
     description: >-
-      Specifies bash commands to run before the GitHub Actions Runner starts. It's useful for installing dependencies with apt-get, dnf, zypper etc.
+      Specifies bash commands to run before the GitHub Actions Runner starts.
+      It's useful for installing dependencies with apt-get, dnf, zypper etc.
     required: false
   primary_ipv4:
     description: >-
-      ID (integer) of the IPv4 Primary IP to use. If omitted and 'enable_ipv4' is true, a new IPv4 Primary IP will automatically be created.
+      ID (integer) of the IPv4 Primary IP to use.
+      If omitted and 'enable_ipv4' is true, a new IPv4 Primary IP will automatically be created.
     required: false
     default: 'null'
   primary_ipv6:
     description: >-
-      ID (integer) of the IPv6 Primary IP to use. If omitted and 'enable_ipv6' is true, a new IPv6 Primary IP will automatically be created.
+      ID (integer) of the IPv6 Primary IP to use.
+      If omitted and 'enable_ipv6' is true, a new IPv6 Primary IP will automatically be created.
     required: false
     default: 'null'
   runner_dir:
@@ -82,7 +88,9 @@ inputs:
     default: '60'
   runner_version:
     description: >-
-      GitHub Actions Runner version (omit 'v'; e.g., '2.321.0'). 'latest' will install the latest version. 'skip' will skip the installation. A working installation is expected in the 'runner_dir'.
+      GitHub Actions Runner version (omit 'v'; e.g., '2.321.0').
+      'latest' will install the latest version.
+      'skip' will skip the installation. A working installation is expected in the 'runner_dir'.
     required: false
     default: 'latest'
   server_id:
@@ -109,15 +117,18 @@ inputs:
       Volume ID (integer) which should be attached to the Server at the creation time.
     required: false
     default: 'null'
+
 outputs:
   label:
     description: >-
-      This label uniquely identifies a GitHub Actions runner, used both to specify which runner a job should execute on via the `runs-on` property and to delete the runner when it's no longer needed.
+      This label uniquely identifies a GitHub Actions runner,
+      used both to specify which runner a job should execute on via the `runs-on` property and to delete the runner when it's no longer needed.
     value: ${{ steps.hcloud-github-runner.outputs.label }}
   server_id:
     description: >-
       This is the Hetzner Cloud server ID of the runner, used to delete the server when the runner is no longer required.
     value: ${{ steps.hcloud-github-runner.outputs.server_id }}
+
 runs:
   using: "composite"
   steps:
